@@ -1,7 +1,7 @@
+# apps/passengers/models.py
 from django.db import models
 
-# Create your models here.
-class Passenger(models.Model):
+class Passenger(models.Model): # <--- ¡Aquí está el nombre de la clase!
     name = models.CharField(max_length=100)
     document = models.CharField(max_length=20, unique=True)
     email = models.EmailField()
@@ -10,4 +10,4 @@ class Passenger(models.Model):
     document_type = models.CharField(max_length=50)
 
     def __str__(self):
-        return f'Name: {self.name} - Document: {self.document}'
+        return f'Name: {self.name}- Document: {self.document}'

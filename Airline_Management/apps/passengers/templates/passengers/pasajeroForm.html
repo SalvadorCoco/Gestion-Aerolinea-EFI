@@ -1,0 +1,7 @@
+<h1>{% if form.instance.pk %}Editar Pasajero{% else %}Agregar Nuevo Pasajero{% endif %}</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar</button>
+</form>
+<a href="{% if form.instance.pk %}{% url 'passengerDetail' form.instance.pk %}{% else %}{% url 'passengerList' %}{% endif %}">Cancelar</a> {# <-- CAMBIADO #}

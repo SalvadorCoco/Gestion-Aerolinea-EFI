@@ -1,0 +1,15 @@
+<h1>Lista de Pasajeros</h1>
+<a href="{% url 'passengerCreate' %}">Agregar Nuevo Pasajero</a> {# <-- CAMBIADO #}
+<ul>
+    {% for pasajero in passengers %} {# NOTA: en views, context_object_name es 'passengers', no 'pasajeros' #}
+        <li>
+            <a href="{% url 'passengerDetail' pasajero.pk %}">{{ pasajero.name }} {{ pasajero.document }}</a> {# <-- CAMBIADO, y asumo 'name' y 'document' son tus campos #}
+            (<a href="{% url 'passengerUpdate' pasajero.pk %}">Editar</a> | {# <-- CAMBIADO #}
+            <a href="{% url 'passengerDelete' pasajero.pk %}">Eliminar</a>) {# <-- CAMBIADO #}
+        </li>
+    {% empty %}
+        <li>No hay pasajeros registrados.</li>
+    {% endfor %}
+</ul>
+
+{# Si tienes paginación, también revisa los nombres de las URLs allí si existieran #}
