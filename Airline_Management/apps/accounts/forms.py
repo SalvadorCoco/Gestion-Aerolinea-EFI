@@ -34,6 +34,13 @@ class RegisterForm(forms.Form):
         )
     )
 
+    role_id = forms.CharField(
+        label = 'Rol',
+        widget=forms.Select(
+            attrs={'class': 'form_control'}
+        )
+    )
+
     def clean_username(self):
         username = self.cleaned_data['username']
         if Account.objects.filter(username=username).exists():
@@ -54,18 +61,18 @@ class RegisterForm(forms.Form):
         if pass1 and pass2 and pass1 != pass2:
             raise ValidationError('Las contraseñas no coinciden')
         
-    class LoginForm(forms.Form):
-        username = forms.CharField(
-            label='Nombre de Usuario',
-            max_length=150,
-            widget=forms.TextInput(
-                attrs={'class': 'form-control'}
-            )
+class LoginForm(forms.Form):
+    username = forms.CharField(
+        label='Nombre de Usuario',
+        max_length=150,
+        widget=forms.TextInput(
+            attrs={'class': 'form-control'}
         )
-        password=forms.CharField(
-            label='Contraseña',
-            max_length=150,
-            widget=forms.PasswordInput(
-                attrs={'class': 'form-control'}
-            )
+    )
+    password=forms.CharField(
+        label='Contraseña',
+        max_length=150,
+        widget=forms.PasswordInput(
+            attrs={'class': 'form-control'}
         )
+    )

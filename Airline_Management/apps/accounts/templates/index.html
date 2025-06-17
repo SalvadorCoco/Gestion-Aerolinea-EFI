@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container">
+    <p class="lead">
+        <a class="btn btn-primary btn-lg" href="{% url 'login' %}" role="button">Ingresa</a>
+    </p>
+    <p class="lead">
+            <a class="btn btn-primary btn-lg" href="{% url 'register' %}" role="button">Registrate</a>
+    </p>
+
+    <p class="lead">
+        <a class="btn btn-primary btn-lg" href="{% url 'airplane_list' %}" role="button">Airplanes</a>
+    </p>
+</div>
+{% endblock %}
