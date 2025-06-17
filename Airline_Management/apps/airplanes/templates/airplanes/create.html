@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Airplane_Create{% endblock %}
+
+{% block content %}
+<h2>{{creador_de_aviones}}</h2>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar</button>
+    <a href="{% url 'airplane_list' %}">Volver</a>
+</form>
+{% endblock %}

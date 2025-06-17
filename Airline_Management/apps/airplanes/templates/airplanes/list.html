@@ -2,32 +2,39 @@
 
 {% block title %}Airplanes List{% endblock %}
 
+{% block active %}active{% endblock %}
+
 {% block content %}
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Modelo</th>
-            <th>Capacidad</th>
-            <th>Filas</th>
-            <th>Columnas</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for airplane in airplanes %}
-        <tr>
-            <td>{{airplane.model}}</td>
-            <td>{{airplane.capacity}}</td>
-            <td>{{airplane.rows}}</td>
-            <td>{{airplane.columns}}</td>
-            <td>
-                <a href="{% url 'airplane_detail' airplane.id %}" class="fa fa-eye" aria-hidden="true"> Ver </a>
-                <a href="{% url 'airplane_delete' airplane.id %}" class="fa fa-trash" aria-hidden="true"> Borrar </a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="container mt-4">
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#Id</th>
+                <th scope="col">Modelo</th>
+                <th scope="col">Capacidad</th>
+                <th scope="col">Filas</th>
+                <th scope="col">Columnas</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for airplane in airplanes %}
+            <tr>
+                <th scope="row">{{airplane.id}}</th>
+                <td>{{airplane.model}}</td>
+                <td>{{airplane.capacity}}</td>
+                <td>{{airplane.rows}}</td>
+                <td>{{airplane.columns}}</td>
+                <td>
+                    <a href="{% url 'airplane_detail' airplane.id %}" class="fa fa-eye" aria-hidden="true"> Ver </a>
+                    <a href="{% url 'airplane_delete' airplane.id %}" class="fa fa-trash" aria-hidden="true"> Borrar </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'airplane_create' %}" class="btn btn-info">Crear Avion</a>
+</div>
 
 {% endblock %}

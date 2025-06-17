@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Airplane_Delete{% endblock %}
+
+{% block content %}
+    <h2>Seguro desea borrar {{object}} ?</h2>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">
+            Estoy Seguro
+        </button>
+        <a href="{% url 'airplane_list' %}" class="btn red">Volver</a>
+    </form>
+{% endblock %}

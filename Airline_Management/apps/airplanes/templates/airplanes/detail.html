@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Airplane_Detail{% endblock %}
+
+{% block content %}
+<h2>{{airplane.model}}</h2>
+<ul>
+    <li>Capacity: {{airplane.capacity}}</li>
+    <li>Total Rows: {{airplane.rows}}</li>
+    <li>Total Columns: {{airplane.columns}}</li>
+</ul>
+<a href="{% url 'airplane_list' %}">Volver</a>
+{% endblock %}
