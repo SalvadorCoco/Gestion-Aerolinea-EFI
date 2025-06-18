@@ -30,16 +30,19 @@ class RegisterView(View):
         form = RegisterForm(request.POST)
         if form.is_valid():
             print(form.cleaned_data['username'])
-            Account.objects.create(
+            
+            Account.objects.create_superuser(
                 username=form.cleaned_data['username'],
                 password=form.cleaned_data['password1'],
                 email=form.cleaned_data['email'],
                 role_id=form.cleaned_data['role_id']
             )
+            
             messages.success(
                 request,
                 'Usuario Generado Correctamente'
             )
+            return redirect('login')
         return render(
             request,
             'register.html',

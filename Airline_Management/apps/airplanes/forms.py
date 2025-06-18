@@ -8,13 +8,28 @@ class AirlineForm(forms.ModelForm):
         widgets = {
             'model' : forms.TextInput(
                 attrs={
-                    'class':'form-control w-25 personalizado',
+                    'class':'form-control',
                     'placeholder':'Ingrese el modelo'
                 }
             ),
-            'capacity' : forms.NumberInput(),
-            'rows' : forms.NumberInput(),
-            'columns' : forms.NumberInput(),
+            'capacity' : forms.NumberInput(
+                attrs={
+                    'class':'form-control',
+                    'placeholder':'Ingrese la capacidad'
+                }
+            ),
+            'rows' : forms.NumberInput(
+                attrs={
+                    'class':'form-control',
+                    'placeholder':'Numero de filas'
+                }
+            ),
+            'columns' : forms.NumberInput(
+                attrs={
+                    'class':'form-control',
+                    'placeholder':'Numero de columnas'
+                }
+            ),
         } 
 
         

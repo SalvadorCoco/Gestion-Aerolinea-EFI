@@ -1,5 +1,5 @@
 from django import forms
-from .models import Account
+from .models import Account, Role
 from django.core.exceptions import ValidationError
 
 class RegisterForm(forms.Form):
@@ -34,7 +34,9 @@ class RegisterForm(forms.Form):
         )
     )
 
-    role_id = forms.CharField(
+    role_id = forms.ModelChoiceField(
+        queryset=Role.objects.all(),
+        empty_label='Seleccione un Rol',
         label = 'Rol',
         widget=forms.Select(
             attrs={'class': 'form_control'}
@@ -60,6 +62,9 @@ class RegisterForm(forms.Form):
 
         if pass1 and pass2 and pass1 != pass2:
             raise ValidationError('Las contraseñas no coinciden')
+    
+        
+    
         
 class LoginForm(forms.Form):
     username = forms.CharField(

@@ -4,15 +4,18 @@
 
 {% block content %}
 <div class="container">
+    {% if not user.is_authenticated %}
+    <h3>Debe iniciar sesion para acceder a las funcionalidades</h3>
     <p class="lead">
-        <a class="btn btn-primary btn-lg" href="{% url 'login' %}" role="button">Ingresa</a>
+        <a href="{% url 'login' %}" class="btn btn-primary btn-lg" role="button">Ingresar Ahora</a>
     </p>
     <p class="lead">
-            <a class="btn btn-primary btn-lg" href="{% url 'register' %}" role="button">Registrate</a>
+        <a href="{% url 'register' %}" class="btn btn-primary btn-lg" role="button">Regristrarse</a>
     </p>
-
+    {% else %}
     <p class="lead">
         <a class="btn btn-primary btn-lg" href="{% url 'airplane_list' %}" role="button">Airplanes</a>
     </p>
+    {% endif %}
 </div>
 {% endblock %}
