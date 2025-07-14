@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Flights List{% endblock %}
+
+{% block active %}active{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>#Id</th>
+                <th>Origen</th>
+                <th>Destino</th>
+                <th>Salida</th>
+                <th>Llegada</th>
+                <th>Precio Base</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for flight in flights %}
+            <tr>
+                <td>{{flight.id}}</td>
+                <td>{{flight.origin}}</td>
+                <td>{{flight.destination}}</td>
+                <td>{{flight.departure_date}}</td>
+                <td>{{flight.arrival_date}}</td>
+                <td>${{flight.base_price}}</td>
+                <td>
+                    <a href="{% url 'flight_detail' flight.id %}" class="fa fa-eye" aria-hidden="true"> Ver </a>
+                    <a href="{% url 'flight_delete' flight.id %}" class="fa fa-trash" aria-hidden="true"> Borrar </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'flight_create' %}" class="btn btn-info">Crear Vuelo</a>
+</div>
+
+{% endblock %}

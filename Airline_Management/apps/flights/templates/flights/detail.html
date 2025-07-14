@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Flight_Detail{% endblock %}
+
+{% block content %}
+<h2><span class="text-secondary">Vuelo de {{flight.origin}} a {{flight.destination}}</span></h2>
+<ul>
+    <li>Salida: {{flight.departure_date}}</li>
+    <li>Llegada: {{flight.arrival_date}}</li>
+    <li>Duración: {{flight.duration}}</li>
+    <li>Estado: {{flight.state}}</li>
+    <li>Precio base: ${{flight.base_price}}</li>
+    <li>Responsable: {{flight.account_flight}}</li>
+</ul>
+<a href="{% url 'flight_list' %}">Volver</a>
+{% endblock %}
