@@ -1,0 +1,16 @@
+<h1>Lista de Pasajeros</h1>
+<a href="{% url 'passengerCreate' %}">Agregar Nuevo Pasajero</a>
+<ul>
+  {% for pasajero in passengers %}
+  <li>
+    <a href="{% url 'passengerDetail' pasajero.pk %}"
+      >{{ pasajero.name }} {{ pasajero.document }}</a
+    >
+    (<a href="{% url 'passengerUpdate' pasajero.pk %}">Editar</a>
+    |
+    <a href="{% url 'passengerDelete' pasajero.pk %}">Eliminar</a>)
+  </li>
+  {% empty %}
+  <li>No hay pasajeros registrados.</li>
+  {% endfor %}
+</ul>
