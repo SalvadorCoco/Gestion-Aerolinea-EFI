@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+<h1>Detalle de Reserva</h1>
+<p>Código: {{ reservation.reservation_code }}</p>
+<p>Pasajero: {{ reservation.passenger_id.name }}</p>
+<p>Vuelo: {{ reservation.flight_id }}</p>
+<p>Asiento: {{ reservation.seating_id }}</p>
+<p>Estado: {{ reservation.state }}</p>
+<p>Precio: {{ reservation.price }}</p>
+<p>Fecha: {{ reservation.reservation_date }}</p>
+
+<a href="{% url 'reservation_delete' reservation.pk %}">Eliminar</a>
+<a href="{% url 'reservation_list' %}">Volver</a>

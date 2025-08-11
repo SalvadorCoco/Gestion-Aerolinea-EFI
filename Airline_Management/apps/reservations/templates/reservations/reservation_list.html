@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+<h1>Lista de Reservas</h1>
+
+<a href="{% url 'reservation_create' %}" class="btn btn-primary">
+    Crear nueva reserva
+</a>
+
+<ul>
+    {% for reservation in reservations %}
+        <li>
+            {{ reservation.reservation_code }} - {{ reservation.customer_name }}
+            <a href="{% url 'reservation_update' reservation.pk %}">Editar</a>
+            <a href="{% url 'reservation_delete' reservation.pk %}">Eliminar</a>
+        </li>
+    {% empty %}
+        <li>No hay reservas</li>
+    {% endfor %}
+</ul>
