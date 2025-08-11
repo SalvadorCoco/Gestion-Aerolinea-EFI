@@ -6,13 +6,13 @@
 
 {% block content %}
 
- %}
+ 
 <div class="container mt-4">
     <table class="table table-bordered">
         <thead class="thead-dark">
             <tr>
-                <th scope="col">#Id</th>
                 <th scope="col">Modelo</th>
+                <th scope="col">Imagen</th>
                 <th scope="col">Capacidad</th>
                 <th scope="col">Filas</th>
                 <th scope="col">Columnas</th>
@@ -22,20 +22,38 @@
         <tbody>
             {% for airplane in airplanes %}
             <tr>
-                <th scope="row">{{airplane.id}}</th>
                 <td>{{airplane.model}}</td>
+                <td>
+                    {% if airplane.image %}
+                        <img src="{{ airplane.image.url }}" alt="{{ airplane.model }}" width="200">
+                    {% else %}
+                        <span class="text-muted">Sin imagen</span>
+                    {% endif %}
+                </td>
                 <td>{{airplane.capacity}}</td>
                 <td>{{airplane.rows}}</td>
                 <td>{{airplane.columns}}</td>
+                {% if user.is_superuser %}
                 <td>
                     <a href="{% url 'airplane_detail' airplane.id %}" class="fa fa-eye" aria-hidden="true"> Ver </a>
+                    <a href="{% url 'airplane_update' airplane.id %}" class="fa fa-eye" aria-hidden="true"> Editar </a>
                     <a href="{% url 'airplane_delete' airplane.id %}" class="fa fa-trash" aria-hidden="true"> Borrar </a>
                 </td>
+                {% else %}
+                <td>
+                    <a href="{% url 'login' %}" class="fa fa-eye" aria-hidden="true"> Ingresar </a>
+                    <p>(Debe ingresar como administrador para esta funcionalidad)</p>
+                </td>
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>
     </table>
-    <a href="{% url 'airplane_create' %}" class="btn btn-info">Crear Avion</a>
+    {% if user.is_superuser %}
+        <a href="{% url 'airplane_create' %}" class="btn btn-info">Crear Avion</a>
+    {% else %}
+        <p><a href="{ url 'login' }" class="fa fa-eye">Iniciar Sesion</a>para la creacion de aviones</p>
+    {% endif %}
 </div>
 
 {% endblock %}

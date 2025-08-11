@@ -4,12 +4,17 @@ from apps.airplanes.models import Airplane, Seating
 class AirlineForm(forms.ModelForm):
     class Meta:
         model = Airplane
-        fields = ['model', 'capacity', 'rows', 'columns']
+        fields = ['model', 'image', 'capacity', 'rows', 'columns']
         widgets = {
             'model' : forms.TextInput(
                 attrs={
                     'class':'form-control',
                     'placeholder':'Ingrese el modelo'
+                }
+            ),
+            'image' : forms.ClearableFileInput(
+                attrs={
+                    'class':'form-control-file'
                 }
             ),
             'capacity' : forms.NumberInput(

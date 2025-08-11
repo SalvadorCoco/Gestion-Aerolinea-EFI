@@ -4,13 +4,18 @@ from .models import Account
 from django.shortcuts import redirect, render
 from django.views import View
 from .forms import LoginForm, RegisterForm
+from apps.airplanes.models import Airplane
+from apps.flights.models import Flight
 
 # Para traduccion
 from django.utils.translation import activate, get_language, deactivate
 
+
 class HomeView(View):
     def get(self, request):
-        return render(request, 'index.html')
+        airplanes = Airplane.objects.all()
+        flights = Flight.objects.all()
+        return render(request, 'index.html', {'airplanes':airplanes, 'flights':flights})
     
 class LogoutView(View):
     def get(self, request):

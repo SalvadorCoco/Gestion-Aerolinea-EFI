@@ -5,6 +5,7 @@ from apps.flights.views import (
     FlightDelete,
     FlightDetail, 
     FlightList,
+    FlightUpdate,
 )
 
 urlpatterns = [
@@ -28,4 +29,9 @@ urlpatterns = [
         view=FlightDelete.as_view(),
         name='flight_delete'
     ),
+    path(
+        route='flight_update/<int:flight_id>/',
+        view=FlightUpdate.as_view(),
+        name='flight_update'
+    )
 ]

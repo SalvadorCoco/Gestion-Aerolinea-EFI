@@ -13,6 +13,7 @@ class Flight(models.Model):
     )
     origin = models.CharField(max_length=100)
     destination = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='flights/', blank=True, null=True)
     departure_date = models.DateTimeField(auto_now_add=True)
     arrival_date = models.DateTimeField()
     duration = models.DurationField()

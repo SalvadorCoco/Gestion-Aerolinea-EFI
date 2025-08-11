@@ -15,9 +15,46 @@
         <a href="{% url 'register' %}" class="btn btn-primary btn-lg" role="button">Regristrarse</a>
     </p>
     {% else %}
-    <p class="lead">
-        <a class="btn btn-primary btn-lg" href="{% url 'airplane_list' %}" role="button">Airplanes</a>
-    </p>
+
+    <div class="airplane_content ">
+        <h1>Aviones</h1>
+        <div class="d-flex flex-wrap mt-4 justify-content-center align-content-center">
+            {% for airplane in airplanes %}
+            <div class="card mr-4" style="width: 18rem;">
+                <img class="card-img-top" src="{{ airplane.image.url }}" alt="{{airplane.model}}" height="200">
+                <div class="card-body">
+                    <h5 class="card-title">{{airplane.model}}</h5>
+                    <ul>
+                        <li>Capacidad: {{airplane.capacity}}</li>
+                        <li>Filas: {{airplane.rows}}</li>
+                        <li>Columnas: {{airplane.columns}}</li>
+                    </ul>
+                    <a href="{% url 'airplane_list' %}" class="btn btn-primary">Ver Aviones</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div> 
+    </div>
+
+    <div class="flight_content ">
+        <h1>Vuelos</h1>
+        <div class="d-flex flex-wrap mt-4 justify-content-center align-content-center">
+            {% for flight in flights %}
+            <div class="card mr-4" style="width: 18rem;">
+                <img class="card-img-top" src="{{ flight.image.url }}" alt="{{flight.origin}}" height="200">
+                <div class="card-body">
+                    <h5 class="card-title">{{flight.destination}}</h5>
+                    <ul>
+                        <li>Salida: {{flight.origin}}</li>
+                        <li>Destino {{flight.destination}}</li>
+                        <li>Avion: {{flight.airplane_id.model}}</li>
+                    </ul>
+                    <a href="{% url 'airplane_list' %}" class="btn btn-primary">Ver Vuelos</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div> 
+    </div>
     {% endif %}
 </div>
 {% endblock %}

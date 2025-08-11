@@ -4,6 +4,7 @@ from django.db import models
 
 class Airplane(models.Model):
     model = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='airplanes/', blank=True, null=True)
     capacity = models.IntegerField()
     rows = models.IntegerField()
     columns = models.IntegerField()

@@ -9,6 +9,7 @@ from django.views.generic import (
     DeleteView,
     DetailView,
     ListView,
+    UpdateView,
 )
 from apps.airplanes.forms import AirlineForm
 # Create your views here.
@@ -39,3 +40,12 @@ class AirplaneCreate(CreateView):
         context = super().get_context_data(**kwargs)
         context['creador_de_aviones'] = 'Creador de Aviones'
         return context
+    
+class AirplaneEdit(UpdateView):
+    model = Airplane
+    form_class = AirlineForm
+    template_name = 'airplanes/edit.html'
+    pk_url_kwarg = 'airplane_id'
+    success_url = reverse_lazy('airplane_list')
+
+
