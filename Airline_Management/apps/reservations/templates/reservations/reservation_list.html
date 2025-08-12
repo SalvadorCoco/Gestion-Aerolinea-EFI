@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
+{% block content %}
 <h1>Lista de Reservas</h1>
 
 <a href="{% url 'reservation_create' %}" class="btn btn-primary">
@@ -9,11 +10,12 @@
 <ul>
     {% for reservation in reservations %}
         <li>
-            {{ reservation.reservation_code }} - {{ reservation.customer_name }}
-            <a href="{% url 'reservation_update' reservation.pk %}">Editar</a>
-            <a href="{% url 'reservation_delete' reservation.pk %}">Eliminar</a>
+            {{ reservation.reservation_code }} - {{ reservation.passenger_id.name }} - {{ reservation.seating_id}}
+            <!-- <a href="{% url 'reservation_update' reservation.id %}">Editar</a>
+            <a href="{% url 'reservation_delete' reservation.id %}">Eliminar</a> -->
         </li>
     {% empty %}
         <li>No hay reservas</li>
     {% endfor %}
 </ul>
+{% endblock %}

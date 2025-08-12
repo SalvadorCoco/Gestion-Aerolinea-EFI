@@ -9,7 +9,14 @@ class ReservationForm(forms.ModelForm):
         model = Reservation
         fields = ['flight_id', 'passenger_id', 'seating_id', 'price']
 
-    # Filtro para mostrar solo asientos disponibles
     def __init__(self, *args, **kwargs):
+        airplane = kwargs.pop('airplane', None)  # Sacamos airplane para que no moleste
         super().__init__(*args, **kwargs)
-        self.fields['seating_id'].queryset = Seating.objects.filter(state=False)
+
+        # Filtramos asientos disponibles
+        qs = Seating.objects.filter(state=False)
+        if airplane:
+            qs = qs.filter(airplane_id=airplane)
+
+        self.fields['seating_id'].queryset = qs
+
