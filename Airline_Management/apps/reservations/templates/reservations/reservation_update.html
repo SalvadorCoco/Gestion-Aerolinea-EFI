@@ -1,12 +1,32 @@
 {% extends 'base.html' %}
-
 {% block content %}
-<h1>Actualizar Reserva</h1>
+<div class="container mt-4">
+    <h2>Actualizar Reserva - {{ object.reservation_code }}</h2>
+    <form method="post">
+        {% csrf_token %}
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Guardar cambios</button>
-    <a href="{% url 'reservation_list' %}">Cancelar</a>
-</form>
+        <div class="mb-3">
+            <label for="flight_id">Vuelo</label>
+            {{ form.flight_id }}
+        </div>
+
+        <div class="mb-3">
+            <label for="passenger_id">Pasajero</label>
+            {{ form.passenger_id }}
+        </div>
+
+        <div class="mb-3">
+            <label for="seating_id">Asiento</label>
+            {{ form.seating_id }}
+        </div>
+
+        <div class="mb-3">
+            <label for="price">Precio</label>
+            {{ form.price }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+        <a href="{% url 'reservation_list' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
 {% endblock %}

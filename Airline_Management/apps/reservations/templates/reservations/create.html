@@ -2,76 +2,30 @@
 {% block content %}
 <div class="container mt-4">
     <h2>Crear Reserva</h2>
-    <form method="post" id="reservation-form">
+    <form method="post">
         {% csrf_token %}
-        
 
         <div class="mb-3">
             <label for="flight_id">Vuelo</label>
-            <select name="flight_id" id="flight_id" class="form-select" required>
-                {% for flight in flights %}
-                    <option value="{{ flight.id }}">{{ flight }}</option>
-                {% endfor %}
-            </select>
+            {{ form.flight_id }}
         </div>
 
         <div class="mb-3">
             <label for="passenger_id">Pasajero</label>
-            <select name="passenger_id" id="passenger_id" class="form-select" required>
-                {% for passenger in passengers %}
-                    <option value="{{ passenger.id }}">{{ passenger.name }}</option>
-                {% endfor %}
-            </select>
+            {{ form.passenger_id }}
         </div>
 
         <div class="mb-3">
-            <label>Seleccione su asiento</label>
-            <div class="seat-map" style="display: grid; grid-template-columns: repeat({{ airplane.columns }}, 50px); gap: 5px;">
-                {% for seat in seatings %}
-                <div class="seat {% if seat.state %}occupied{% else %}available{% endif %}"
-                data-seat-id="{{ seat.id }}"
-                title="Fila {{ seat.row }} - Columna {{ seat.column }}">
-            {{ seat.number }}
-           </div>
-           
-                {% endfor %}
-            </div>
-        </div>  
-
-        <input type="hidden" name="seating_id" id="seating_id" required>
+            <label for="seating_id">Asiento</label>
+            {{ form.seating_id }}
+        </div>
 
         <div class="mb-3">
             <label for="price">Precio</label>
-            <input type="number" step="0.01" name="price" id="price" class="form-control" required>
+            {{ form.price }}
         </div>
 
         <button type="submit" class="btn btn-primary">Reservar</button>
     </form>
 </div>
-
-<style>
-.seat {
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-}
-.available { background-color: #4CAF50; color: white; }
-.occupied { background-color: #F44336; color: white; cursor: not-allowed; }
-.selected { background-color: #2196F3 !important; }
-</style>
-
-<script>
-document.querySelectorAll('.seat.available').forEach(seat => {
-    seat.addEventListener('click', function() {
-        document.querySelectorAll('.seat').forEach(s => s.classList.remove('selected'));
-        this.classList.add('selected');
-        document.getElementById('seating_id').value = this.dataset.seatId;
-    });
-});
-</script>
 {% endblock %}

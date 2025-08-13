@@ -1,52 +1,54 @@
-from django.shortcuts import render, get_object_or_404
-from django.contrib import messages
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView, DetailView
 from django.urls import reverse_lazy
-from django.views.generic import (
-    CreateView,
-    ListView,
-    DetailView,
-    DeleteView,
-    UpdateView
-    )
 from apps.reservations.models import Reservation
 from apps.reservations.forms import ReservationForm
-from apps.airplanes.models import Airplane, Seating
 from apps.flights.models import Flight
 from apps.passengers.models import Passenger
-import random, string
+from apps.airplanes.models import Seating
 
-# views.py
 class ReservationCreate(CreateView):
     model = Reservation
     form_class = ReservationForm
     template_name = 'reservations/create.html'
     success_url = reverse_lazy('reservation_list')
 
-    def get_form_kwargs(self):
-        return super().get_form_kwargs()
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['flights'] = Flight.objects.all()
+        context['passengers'] = Passenger.objects.all()
 
+        flight_id = self.request.GET.get('flight_id') or self.request.POST.get('flight_id')
+        if flight_id:
+            flight = Flight.objects.get(id=flight_id)
+            context['seatings'] = Seating.objects.filter(airplane_id=flight.airplane_id, state=False)
+        else:
+            context['seatings'] = Seating.objects.filter(state=False)
 
-
-
+        return context
 
 class ReservationListView(ListView):
     model = Reservation
     template_name = "reservations/reservation_list.html"
     context_object_name = "reservations"
 
-
-class ReservationDetailView(DetailView):
+class ReservationUpdateView(UpdateView):
     model = Reservation
-    template_name = "reservations/reservation_detail.html"
-    context_object_name = "reservation"
+    form_class = ReservationForm
+    template_name = "reservations/reservation_update.html"
+    success_url = reverse_lazy("reservation_list")
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['flights'] = Flight.objects.all()
+        context['passengers'] = Passenger.objects.all()
+        return context
 
 class ReservationDeleteView(DeleteView):
     model = Reservation
     template_name = "reservations/reservation_confirm_delete.html"
     success_url = reverse_lazy("reservation_list")
 
-class ReservationUpdateView(UpdateView):
+class ReservationDetailView(DetailView):
     model = Reservation
-    template_name = "reservations/reservation_update.html"
-    success_url = reverse_lazy("reservation_list")
+    template_name = "reservations/reservation_detail.html"
+    context_object_name = "reservation"

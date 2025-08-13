@@ -12,11 +12,17 @@ class ReservationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # Todos los vuelos y pasajeros
+        # Aplicar clases Bootstrap
+        self.fields['flight_id'].widget.attrs.update({'class': 'form-select'})
+        self.fields['passenger_id'].widget.attrs.update({'class': 'form-select'})
+        self.fields['seating_id'].widget.attrs.update({'class': 'form-select'})
+        self.fields['price'].widget.attrs.update({'class': 'form-control'})
+
+        # Cargar vuelos y pasajeros
         self.fields['flight_id'].queryset = Flight.objects.all()
         self.fields['passenger_id'].queryset = Passenger.objects.all()
 
-        # Filtrar asientos disponibles según el vuelo elegido
+        # Filtrar asientos disponibles según vuelo
         flight_id = None
         if 'flight_id' in self.data:
             try:
@@ -31,5 +37,4 @@ class ReservationForm(forms.ModelForm):
                 state=False
             )
         else:
-            # Mostrar todos los asientos libres si no se seleccionó vuelo
             self.fields['seating_id'].queryset = Seating.objects.filter(state=False)
