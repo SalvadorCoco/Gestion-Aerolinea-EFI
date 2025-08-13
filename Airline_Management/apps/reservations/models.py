@@ -1,5 +1,4 @@
 from django.db import models
-
 import random
 import string
 
@@ -7,7 +6,6 @@ from apps.airplanes.models import Seating
 from apps.flights.models import Flight
 from apps.passengers.models import Passenger
 
-# Create your models here.
 class Reservation(models.Model):
     flight_id = models.ForeignKey(
         Flight,
@@ -26,12 +24,24 @@ class Reservation(models.Model):
     price = models.DecimalField(max_digits=20, decimal_places=2)
     reservation_code = models.CharField(max_length=10, unique=True)
 
-    reservation_code = models.CharField(max_length=10, unique=True)
-
     def save(self, *args, **kwargs):
+        # Generar código de reserva si no existe
         if not self.reservation_code:
             self.reservation_code = self._generate_unique_code()
+
         super().save(*args, **kwargs)
+
+        # Marcar asiento como ocupado
+        if self.seating_id and self.seating_id.state is False:
+            self.seating_id.state = True
+            self.seating_id.save()
+
+    def delete(self, *args, **kwargs):
+        # Liberar asiento
+        if self.seating_id and self.seating_id.state is True:
+            self.seating_id.state = False
+            self.seating_id.save()
+        super().delete(*args, **kwargs)
 
     def _generate_unique_code(self):
         while True:
@@ -41,7 +51,8 @@ class Reservation(models.Model):
 
     def __str__(self):
         return f'{self.reservation_code} - {self.passenger_id.name}'
-    
+
+
 class Ticket(models.Model):
     reservation_id = models.OneToOneField(
         Reservation,

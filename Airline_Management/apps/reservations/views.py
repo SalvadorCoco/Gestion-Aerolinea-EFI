@@ -15,53 +15,17 @@ from apps.flights.models import Flight
 from apps.passengers.models import Passenger
 import random, string
 
+# views.py
 class ReservationCreate(CreateView):
     model = Reservation
-    queryset = Reservation.objects.all()   # <- explícito para evitar el error
     form_class = ReservationForm
     template_name = 'reservations/create.html'
     success_url = reverse_lazy('reservation_list')
 
     def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        # Si quieres filtrar asientos por avión, pasalo al formulario
-        airplane = Airplane.objects.first()
-        kwargs['airplane'] = airplane
-        return kwargs
+        return super().get_form_kwargs()
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        airplane = Airplane.objects.first()
-        context['airplane'] = airplane
 
-        # Asegurarnos de que todos los asientos existen en la BD
-        seatings = []
-        for row in range(1, airplane.rows + 1):
-            for col in range(1, airplane.columns + 1):
-                number = (row - 1) * airplane.columns + col
-                seat_obj, created = Seating.objects.get_or_create(
-                    airplane_id=airplane,
-                    row=row,
-                    column=col,
-                    defaults={
-                        'number': number,
-                        'type': 'Normal',
-                        'state': False
-                    }
-                )
-                seatings.append(seat_obj)
-
-        context['seatings'] = seatings
-        context['flights'] = Flight.objects.all()
-        context['passengers'] = Passenger.objects.all()
-        return context
-
-    def form_invalid(self, form):
-        # imprime errores en consola (útil en desarrollo)
-        print("FORM ERRORS:", form.errors)
-        for field, errs in form.errors.items():
-            messages.error(self.request, f"{field}: {errs}")
-        return super().form_invalid(form)
 
 
 
