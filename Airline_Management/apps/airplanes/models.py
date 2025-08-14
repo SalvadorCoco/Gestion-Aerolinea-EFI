@@ -9,6 +9,14 @@ class Airplane(models.Model):
     rows = models.IntegerField()
     columns = models.IntegerField()
 
+    def save(self, *args, **kwargs):
+        # Limite de columnas
+        max_columns = 8
+        if self.capacity:
+            self.columns = min(self.capacity, max_columns)
+            self.rows = (self.capacity // self.columns) + (1 if self.capacity % self.columns else 0)
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.model
     
@@ -33,6 +41,6 @@ class Seating(models.Model):
 
     def __str__(self):
         return f"Seating: {self.number} ({self.type})"
-    
+
 
 

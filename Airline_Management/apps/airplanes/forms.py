@@ -4,7 +4,7 @@ from apps.airplanes.models import Airplane, Seating
 class AirlineForm(forms.ModelForm):
     class Meta:
         model = Airplane
-        fields = ['model', 'image', 'capacity', 'rows', 'columns']
+        fields = ['model', 'image', 'capacity']  # Elimina 'rows' y 'columns'
         widgets = {
             'model' : forms.TextInput(
                 attrs={
@@ -21,18 +21,6 @@ class AirlineForm(forms.ModelForm):
                 attrs={
                     'class':'form-control',
                     'placeholder':'Ingrese la capacidad'
-                }
-            ),
-            'rows' : forms.NumberInput(
-                attrs={
-                    'class':'form-control',
-                    'placeholder':'Numero de filas'
-                }
-            ),
-            'columns' : forms.NumberInput(
-                attrs={
-                    'class':'form-control',
-                    'placeholder':'Numero de columnas'
                 }
             ),
         } 
