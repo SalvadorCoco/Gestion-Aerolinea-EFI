@@ -24,7 +24,7 @@ class PassengerForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Ingrese el telefono',
             }),
-            'document_type': forms.TextInput(attrs={
+            'document_type': forms.Select(attrs={
                 'class': 'form-control',
                 'placeholder': 'Ingrese el tipo de documento',
             }),

@@ -12,7 +12,6 @@ class FlightForm(forms.ModelForm):
             'image': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
             'arrival_date': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
             'duration': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Duración (HH:MM:SS)'}),
-            'state': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Estado'}),
+            'status': forms.Select(attrs={'class': 'form-select'}),
             'base_price': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Precio base'}),
-            'account_flight': forms.SelectMultiple(attrs={'class': 'form-control'}),
         }

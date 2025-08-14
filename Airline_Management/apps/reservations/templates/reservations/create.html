@@ -30,4 +30,9 @@
     <a href="{% url 'list' %}" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>
+<script>
+document.getElementById('id_flight').addEventListener('change', function() {
+    this.form.submit();
+});
+</script>
 {% endblock %}
