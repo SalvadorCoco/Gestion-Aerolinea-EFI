@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+{% if user.is_authenticated and user.role_id.description == 'Admin' %}
 <div class="container mt-4">
     <h2>Actualizar Reserva - {{ object.reservation_code }}</h2>
     <form method="post">
@@ -29,4 +30,7 @@
     <a href="{% url 'list' %}" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>
+
+Solo los Administradores pueden crear Reservas.
+<p>Por favor, <a href="{% url 'login' %}">inicia sesión</a> para editar una reserva.</p>
 {% endblock %}

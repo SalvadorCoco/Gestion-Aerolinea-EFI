@@ -3,6 +3,7 @@
 {% block title %}Flight_Delete{% endblock %}
 
 {% block content %}
+{% if user.is_authenticated and user.role_id.description == 'Admin' %}
     <h2>Seguro desea borrar el vuelo {{object}} ?</h2>
     <form method="post">
         {% csrf_token %}
@@ -11,4 +12,7 @@
         </button>
         <a href="{% url 'flight_list' %}" class="btn red">Volver</a>
     </form>
+    
+Solo los Administradores pueden crear Vuelos.
+<p>Por favor, <a href="{% url 'login' %}">inicia sesión</a> para borrar un vuelo.</p>
 {% endblock %}

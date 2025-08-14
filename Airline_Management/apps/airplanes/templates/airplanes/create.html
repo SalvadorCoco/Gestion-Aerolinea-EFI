@@ -3,6 +3,8 @@
 {% block title %}Airplane_Create{% endblock %}
 
 {% block content %}
+{% if user.is_authenticated and user.role_id.description == 'Admin' %}
+
 <h2>{{creador_de_aviones}}</h2>
 
 <div class="container">
@@ -15,4 +17,9 @@
         </div>
     </form>
 </div>
+{% endif %}
+
+Solo los Administradores pueden crear aviones.
+<p>Por favor, <a href="{% url 'login' %}">inicia sesión</a> para crear un avión.</p>
+
 {% endblock %}
