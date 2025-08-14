@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Crear Reserva</h2>
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label for="flight_id">Vuelo</label>
+            {{ form.flight_id }}
+        </div>
+
+        <div class="mb-3">
+            <label for="passenger_id">Pasajero</label>
+            {{ form.passenger_id }}
+        </div>
+
+        <div class="mb-3">
+            <label for="seating_id">Asiento</label>
+            {{ form.seating_id }}
+        </div>
+
+        <div class="mb-3">
+            <label for="price">Precio</label>
+            {{ form.price }}
+            {{ form.price.errors }}
+        </div>
+
+    <button type="submit" class="btn btn-primary">Reservar</button>
+    <a href="{% url 'list' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}
