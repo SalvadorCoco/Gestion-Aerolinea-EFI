@@ -3,6 +3,8 @@ Django
 *.pot
 *.pyc
 pycache/
+__pycache__
+*.pyo
 db.sqlite3
 media/
 staticfiles/
