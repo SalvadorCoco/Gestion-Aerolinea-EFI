@@ -13,6 +13,19 @@ class ReservationCreate(CreateView):
     template_name = 'reservations/create.html'
     success_url = reverse_lazy('list')
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        flight_id = self.request.GET.get('flight_id') or self.request.POST.get('flight_id')
+        if flight_id:
+            try:
+                flight_instance = Flight.objects.get(pk=flight_id)
+                kwargs['flight_instance'] = flight_instance
+            except Flight.DoesNotExist:
+                kwargs['flight_instance'] = None
+        else:
+            kwargs['flight_instance'] = None
+        return kwargs
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['flights'] = Flight.objects.all()

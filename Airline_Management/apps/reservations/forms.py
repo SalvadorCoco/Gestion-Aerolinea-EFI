@@ -17,12 +17,18 @@ class ReservationForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
+        flight_instance = kwargs.pop('flight_instance', None)
         super().__init__(*args, **kwargs)
         self.fields['flight_id'].queryset = Flight.objects.all()
         self.fields['passenger_id'].queryset = Passenger.objects.all()
 
-        # Filtrar asientos disponibles según el vuelo seleccionado
-        if 'flight_id' in self.data:
+        # Filtrar asientos según el avión del vuelo seleccionado
+        if flight_instance:
+            self.fields['seating_id'].queryset = Seating.objects.filter(
+                airplane_id=flight_instance.airplane_id,
+                state=False
+            )
+        elif 'flight_id' in self.data:
             try:
                 flight_id = int(self.data.get('flight_id'))
                 flight = Flight.objects.get(pk=flight_id)
@@ -32,10 +38,11 @@ class ReservationForm(forms.ModelForm):
                 )
             except (ValueError, TypeError, Flight.DoesNotExist):
                 self.fields['seating_id'].queryset = Seating.objects.none()
-        elif self.instance.pk:
+        elif self.instance.pk and self.instance.flight_id:
             flight = self.instance.flight_id
             self.fields['seating_id'].queryset = Seating.objects.filter(
-                airplane_id=flight.airplane_id
+                airplane_id=flight.airplane_id,
+                state=False
             )
         else:
             self.fields['seating_id'].queryset = Seating.objects.none()
