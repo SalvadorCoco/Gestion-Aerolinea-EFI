@@ -2,7 +2,7 @@
 {% block content %}
 <h1>Lista de Reservas</h1>
 
-<a href="{% url 'reservation_create' %}" class="btn btn-primary mb-3">
+<a href="{% url 'create' %}" class="btn btn-primary mb-3">
     Crear nueva reserva
 </a>
 
@@ -13,10 +13,10 @@
                 {{ reservation.reservation_code }} - {{ reservation.passenger_id.name }} - {{ reservation.seating_id }}
             </span>
             <span>
-                <a href="{% url 'reservation_update' reservation.id %}" class="btn btn-sm btn-warning">
+                <a href="{% url 'update' reservation.id %}" class="btn btn-sm btn-warning">
                     Editar
                 </a>
-                <a href="{% url 'reservation_delete' reservation.id %}" class="btn btn-sm btn-danger">
+                <a href="{% url 'delete' reservation.id %}" class="btn btn-sm btn-danger">
                     Eliminar
                 </a>
             </span>

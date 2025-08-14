@@ -10,7 +10,7 @@ class ReservationCreate(CreateView):
     model = Reservation
     form_class = ReservationForm
     template_name = 'reservations/create.html'
-    success_url = reverse_lazy('reservation_list')
+    success_url = reverse_lazy('list')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -28,14 +28,14 @@ class ReservationCreate(CreateView):
 
 class ReservationListView(ListView):
     model = Reservation
-    template_name = "reservations/reservation_list.html"
+    template_name = "reservations/list.html"
     context_object_name = "reservations"
 
 class ReservationUpdateView(UpdateView):
     model = Reservation
     form_class = ReservationForm
-    template_name = "reservations/reservation_update.html"
-    success_url = reverse_lazy("reservation_list")
+    template_name = "reservations/update.html"
+    success_url = reverse_lazy("list")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -45,10 +45,10 @@ class ReservationUpdateView(UpdateView):
 
 class ReservationDeleteView(DeleteView):
     model = Reservation
-    template_name = "reservations/reservation_confirm_delete.html"
-    success_url = reverse_lazy("reservation_list")
+    template_name = "reservations/delete.html"
+    success_url = reverse_lazy("list")
 
 class ReservationDetailView(DetailView):
     model = Reservation
-    template_name = "reservations/reservation_detail.html"
+    template_name = "reservations/detail.html"
     context_object_name = "reservation"

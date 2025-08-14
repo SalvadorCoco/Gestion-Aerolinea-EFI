@@ -4,6 +4,7 @@ from apps.passengers.models import Passenger
 from apps.airplanes.models import Seating
 from .models import Reservation
 
+
 class ReservationForm(forms.ModelForm):
     class Meta:
         model = Reservation
@@ -38,3 +39,13 @@ class ReservationForm(forms.ModelForm):
             )
         else:
             self.fields['seating_id'].queryset = Seating.objects.filter(state=False)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        flight = cleaned_data.get('flight_id')
+        price = cleaned_data.get('price')
+        if flight and price is not None:
+            base_price = flight.base_price
+            if price < base_price:
+                self.add_error('price', f'El precio debe ser igual o mayor al precio base del vuelo (${base_price}).')
+        return cleaned_data

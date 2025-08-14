@@ -8,9 +8,9 @@ from .views import (
 )
 
 urlpatterns = [
-    path('', ReservationListView.as_view(), name='reservation_list'),
-    path('create/', ReservationCreate.as_view(), name='reservation_create'),
-    path('<int:pk>/update/', ReservationUpdateView.as_view(), name='reservation_update'),
-    path('<int:pk>/delete/', ReservationDeleteView.as_view(), name='reservation_delete'),  # CORRECCIÓN: coincide con template
-    path('<int:pk>/', ReservationDetailView.as_view(), name='reservation_detail'),
-]
+    path('', ReservationListView.as_view(), name='list'),
+    path('create/', ReservationCreate.as_view(), name='create'),
+    path('<int:pk>/update/', ReservationUpdateView.as_view(), name='update'),
+    path('<int:pk>/delete/', ReservationDeleteView.as_view(), name='delete'),
+    path('<int:pk>/', ReservationDetailView.as_view(), name='detail'),
+    ]

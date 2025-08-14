@@ -9,5 +9,5 @@
 <p>Precio: {{ reservation.price }}</p>
 <p>Fecha: {{ reservation.reservation_date }}</p>
 
-<a href="{% url 'reservation_delete' reservation.pk %}">Eliminar</a>
-<a href="{% url 'reservation_list' %}">Volver</a>
+<a href="{% url 'delete' reservation.pk %}">Eliminar</a>
+<a href="{% url 'list' %}">Volver</a>

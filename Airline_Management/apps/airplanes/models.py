@@ -13,6 +13,12 @@ class Airplane(models.Model):
         return self.model
     
 
+
+SEATING_TYPE_CHOICES = [
+    ('Normal', 'Normal'),
+    ('VIP', 'VIP'),
+]
+
 class Seating(models.Model):
     airplane_id = models.ForeignKey(
         Airplane,
@@ -22,7 +28,7 @@ class Seating(models.Model):
     number = models.IntegerField()
     row = models.IntegerField()
     column = models.IntegerField()
-    type = models.CharField(max_length=100)
+    type = models.CharField(max_length=100, choices=SEATING_TYPE_CHOICES, default='Normal')
     state = models.BooleanField(default=False)
 
     def __str__(self):
