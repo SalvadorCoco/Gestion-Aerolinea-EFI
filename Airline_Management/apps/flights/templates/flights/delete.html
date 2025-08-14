@@ -12,7 +12,7 @@
         </button>
         <a href="{% url 'flight_list' %}" class="btn red">Volver</a>
     </form>
-    
+{% endif %}
 Solo los Administradores pueden crear Vuelos.
 <p>Por favor, <a href="{% url 'login' %}">inicia sesión</a> para borrar un vuelo.</p>
 {% endblock %}
