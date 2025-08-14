@@ -5,6 +5,7 @@ from .views import (
     ReservationUpdateView,
     ReservationDeleteView,
     ReservationDetailView,
+    get_all_seatings,
 )
 
 urlpatterns = [
@@ -13,4 +14,5 @@ urlpatterns = [
     path('<int:pk>/update/', ReservationUpdateView.as_view(), name='update'),
     path('<int:pk>/delete/', ReservationDeleteView.as_view(), name='delete'),
     path('<int:pk>/', ReservationDetailView.as_view(), name='detail'),
-    ]
+    path('ajax/all_seatings/', get_all_seatings, name='all_seatings'),
+]

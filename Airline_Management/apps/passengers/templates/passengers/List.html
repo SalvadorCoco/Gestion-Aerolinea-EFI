@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Pasajeros{% endblock %}
+
+{% block activePassenger %}active{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <table class="table table-bordered bg-light">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Documento</th>
+                <th scope="col">Email</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for passenger in passengers %}
+            <tr>
+                <td>{{passenger.name}}</td>
+                <td>{{passenger.document}}</td>
+                <td>{{passenger.email}}</td>
+                {% if user.is_superuser %}
+                <td>
+                    <a href="{% url 'passengerDetail' passenger.id %}" class="fa fa-eye" aria-hidden="true"> Ver </a>
+                    <a href="{% url 'passengerUpdate' passenger.id %}" class="fa fa-eye" aria-hidden="true"> Editar </a>
+                    <a href="{% url 'passengerDelete' passenger.id %}" class="fa fa-trash" aria-hidden="true"> Borrar </a>
+                </td>
+                {% else %}
+                <td>
+                    <a href="{% url 'login' %}" class="fa fa-eye" aria-hidden="true"> Ingresar </a>
+                    <p>(Debe ingresar como administrador para esta funcionalidad)</p>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if user.is_superuser %}
+        <a href="{% url 'passengerCreate' %}" class="btn btn-info">Crear Avion</a>
+    {% else %}
+        <p><a href="{ url 'login' }" class="fa fa-eye">Iniciar Sesion</a>para la creacion de aviones</p>
+    {% endif %}
+</div>
+{% endblock %}
+
+

@@ -9,36 +9,36 @@ class ReservationForm(forms.ModelForm):
     class Meta:
         model = Reservation
         fields = ['flight_id', 'passenger_id', 'seating_id', 'price']
+        widgets = {
+            'flight_id': forms.Select(attrs={'class': 'form-select'}),
+            'passenger_id': forms.Select(attrs={'class': 'form-select'}),
+            'seating_id': forms.Select(attrs={'class': 'form-select'}),
+            'price': forms.NumberInput(attrs={'class': 'form-control'}),
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-        # Aplicar clases Bootstrap
-        self.fields['flight_id'].widget.attrs.update({'class': 'form-select'})
-        self.fields['passenger_id'].widget.attrs.update({'class': 'form-select'})
-        self.fields['seating_id'].widget.attrs.update({'class': 'form-select'})
-        self.fields['price'].widget.attrs.update({'class': 'form-control'})
-
-        # Cargar vuelos y pasajeros
         self.fields['flight_id'].queryset = Flight.objects.all()
         self.fields['passenger_id'].queryset = Passenger.objects.all()
 
-        # Filtrar asientos disponibles según vuelo
-        flight_id = None
+        # Filtrar asientos disponibles según el vuelo seleccionado
         if 'flight_id' in self.data:
             try:
                 flight_id = int(self.data.get('flight_id'))
-            except (ValueError, TypeError):
-                pass
-
-        if flight_id:
-            flight = Flight.objects.get(id=flight_id)
+                flight = Flight.objects.get(pk=flight_id)
+                self.fields['seating_id'].queryset = Seating.objects.filter(
+                    airplane_id=flight.airplane_id,
+                    state=False
+                )
+            except (ValueError, TypeError, Flight.DoesNotExist):
+                self.fields['seating_id'].queryset = Seating.objects.none()
+        elif self.instance.pk:
+            flight = self.instance.flight_id
             self.fields['seating_id'].queryset = Seating.objects.filter(
-                airplane_id=flight.airplane_id,
-                state=False
+                airplane_id=flight.airplane_id
             )
         else:
-            self.fields['seating_id'].queryset = Seating.objects.filter(state=False)
+            self.fields['seating_id'].queryset = Seating.objects.none()
 
     def clean(self):
         cleaned_data = super().clean()
