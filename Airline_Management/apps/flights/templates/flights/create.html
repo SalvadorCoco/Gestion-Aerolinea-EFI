@@ -17,7 +17,8 @@
         </div>
     </form>
 </div>
-{% endif %}
+{% else %}
 Solo los Administradores pueden crear Vuelos.
 <p>Por favor, <a href="{% url 'login' %}">inicia sesión</a> para crear un vuelo.</p>
+{% endif %}
 {% endblock %}

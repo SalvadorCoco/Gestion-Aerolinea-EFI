@@ -12,7 +12,11 @@
         </button>
         <a href="{% url 'airplane_list' %}" class="btn red">Volver</a>
     </form>
-{% endif %}
-Solo los Administradores pueden crear aviones.
-<p>Por favor, <a href="{% url 'login' %}">inicia sesión</a> para crear un avión.</p>
+    
+    {% else %}
+
+    Solo los Administradores pueden crear aviones.
+    <p>Por favor, <a href="{% url 'login' %}">inicia sesión</a> para crear un avión.</p>
+
+    {% endif %}
 {% endblock %}

@@ -31,7 +31,8 @@
     <a href="{% url 'list' %}" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>
-{% endif %}
+{% else %}
 Solo los Administradores pueden crear Reservas.
 <p>Por favor, <a href="{% url 'login' %}">inicia sesión</a> para crear una reserva.</p>
+{% endif %}
 {% endblock %}
