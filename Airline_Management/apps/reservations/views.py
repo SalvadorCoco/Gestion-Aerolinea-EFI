@@ -1,5 +1,6 @@
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView, DetailView
 from django.urls import reverse_lazy
+from django.http import JsonResponse
 from apps.reservations.models import Reservation
 from apps.reservations.forms import ReservationForm
 from apps.flights.models import Flight
@@ -52,3 +53,15 @@ class ReservationDetailView(DetailView):
     model = Reservation
     template_name = "reservations/detail.html"
     context_object_name = "reservation"
+
+def available_seats(request):
+    flight_id = request.GET.get('flight_id')
+    seats = []
+    if flight_id:
+        try:
+            flight = Flight.objects.get(id=flight_id)
+            seats = Seating.objects.filter(airplane_id=flight.airplane_id, state=False)
+        except Flight.DoesNotExist:
+            seats = []
+    seat_list = [{'id': seat.id, 'name': str(seat)} for seat in seats]
+    return JsonResponse({'seats': seat_list})

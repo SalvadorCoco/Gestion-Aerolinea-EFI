@@ -1,0 +1,37 @@
+<h1>Detalle del Pasajero: {{ pasajero.name }} {{ pasajero.document }}</h1>
+<p><strong>Fecha de Nacimiento:</strong> {{ pasajero.date_birth }}</p>
+<p><strong>Tipo de Documento:</strong> {{ pasajero.document_type }}</p>
+<p><strong>Número de Documento:</strong> {{ pasajero.document }}</p>
+<p><strong>Email:</strong> {{ pasajero.email }}</p>
+<p><strong>Teléfono:</strong> {{ pasajero.phone|default:"N/A" }}</p>
+<a href="{% url 'passengerUpdate' pasajero.pk %}">Editar Pasajero</a> |
+<a href="{% url 'passengerDelete' pasajero.pk %}">Eliminar Pasajero</a> |
+<a href="{% url 'passengerList' %}">Volver a la Lista</a>
+
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.db import transaction
+
+@receiver(post_save, sender=Airplane)
+def create_seats_for_airplane(sender, instance, created, **kwargs):
+    if created and not instance.seatings.exists():
+        def create_seats():
+            seats = []
+            seat_number = 1
+            for row in range(1, instance.rows + 1):
+                for col in range(1, instance.columns + 1):
+                    if seat_number > instance.capacity:
+                        break
+                    seats.append(Seating(
+                        airplane_id=instance,
+                        number=seat_number,
+                        row=row,
+                        column=col,
+                        type='Normal',
+                        state=False
+                    ))
+                    seat_number += 1
+                if seat_number > instance.capacity:
+                    break
+            Seating.objects.bulk_create(seats)
+        transaction.on_commit(create_seats)

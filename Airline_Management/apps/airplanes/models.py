@@ -1,6 +1,13 @@
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
-# Create your models here.
+SEATING_TYPE_CHOICES = [
+    ('Normal', 'Normal'),
+    ('Window', 'Ventana'),
+    ('Aisle', 'Pasillo'),
+    ('Exit', 'Salida de Emergencia'),
+]
 
 class Airplane(models.Model):
     model = models.CharField(max_length=100)
@@ -10,7 +17,6 @@ class Airplane(models.Model):
     columns = models.IntegerField()
 
     def save(self, *args, **kwargs):
-        # Limite de columnas
         max_columns = 8
         if self.capacity:
             self.columns = min(self.capacity, max_columns)
@@ -19,13 +25,7 @@ class Airplane(models.Model):
 
     def __str__(self):
         return self.model
-    
 
-
-SEATING_TYPE_CHOICES = [
-    ('Normal', 'Normal'),
-    ('VIP', 'VIP'),
-]
 
 class Seating(models.Model):
     airplane_id = models.ForeignKey(
@@ -40,7 +40,21 @@ class Seating(models.Model):
     state = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Seating: {self.number} ({self.type})"
+        return f"Seat {self.number} ({self.type})"
 
 
-
+@receiver(post_save, sender=Airplane)
+def create_seatings(sender, instance, created, **kwargs):
+    if created:  
+        seat_number = 1
+        for row in range(1, instance.rows + 1):
+            for col in range(1, instance.columns + 1):
+                if seat_number > instance.capacity:
+                    break
+                Seating.objects.create(
+                    airplane_id=instance,
+                    number=seat_number,
+                    row=row,
+                    column=col
+                )
+                seat_number += 1

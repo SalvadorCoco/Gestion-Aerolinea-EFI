@@ -31,8 +31,55 @@
     <a href="{% url 'list' %}" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>
+<script>
+function loadSeats(flightId, selectedSeatId=null) {
+    var seatSelect = document.getElementById('id_seating_id');
+    seatSelect.innerHTML = '<option value="">---------</option>'; // Limpiar
+
+    if (flightId) {
+        fetch('/reservations/available-seats/?flight_id=' + flightId)
+            .then(response => response.json())
+            .then(data => {
+                data.seats.forEach(function(seat) {
+                    var option = document.createElement('option');
+                    option.value = seat.id;
+                    option.text = seat.name;
+                    if (selectedSeatId && seat.id == selectedSeatId) {
+                        option.selected = true;
+                    }
+                    seatSelect.appendChild(option);
+                });
+            });
+    }
+}
+
+// Al cambiar el vuelo
+document.getElementById('id_flight_id').addEventListener('change', function() {
+    loadSeats(this.value);
+});
+
+// Al cargar la página, si hay un vuelo seleccionado, carga los asientos de ese avión
+window.addEventListener('DOMContentLoaded', function() {
+    var flightSelect = document.getElementById('id_flight_id');
+    var seatSelect = document.getElementById('id_seating_id');
+    var selectedFlight = flightSelect.value;
+    var selectedSeat = seatSelect.value;
+    if (selectedFlight) {
+        loadSeats(selectedFlight, selectedSeat);
+    }
+});
+</script>
 {% else %}
 Solo los Administradores pueden crear Reservas.
 <p>Por favor, <a href="{% url 'login' %}">inicia sesión</a> para crear una reserva.</p>
 {% endif %}
 {% endblock %}
+def clean(self):
+        cleaned_data = super().clean()
+        flight = cleaned_data.get('flight_id')
+        seating = cleaned_data.get('seating_id')
+        if flight and seating:
+            if seating.airplane_id != flight.airplane_id:
+                self.add_error('seating_id', 'El asiento no pertenece al avión de este vuelo.')
+        # ...resto de validaciones...
+        return cleaned_data

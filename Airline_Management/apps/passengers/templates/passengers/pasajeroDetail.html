@@ -1,9 +1,0 @@
-<h1>Detalle del Pasajero: {{ pasajero.name }} {{ pasajero.document }}</h1>
-<p><strong>Fecha de Nacimiento:</strong> {{ pasajero.date_birth }}</p>
-<p><strong>Tipo de Documento:</strong> {{ pasajero.document_type }}</p>
-<p><strong>Número de Documento:</strong> {{ pasajero.document }}</p>
-<p><strong>Email:</strong> {{ pasajero.email }}</p>
-<p><strong>Teléfono:</strong> {{ pasajero.phone|default:"N/A" }}</p>
-<a href="{% url 'passengerUpdate' pasajero.pk %}">Editar Pasajero</a> |
-<a href="{% url 'passengerDelete' pasajero.pk %}">Eliminar Pasajero</a> |
-<a href="{% url 'passengerList' %}">Volver a la Lista</a>
