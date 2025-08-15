@@ -1,3 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
 <h1>Detalle del Pasajero: {{ pasajero.name }} {{ pasajero.document }}</h1>
 <p><strong>Fecha de Nacimiento:</strong> {{ pasajero.date_birth }}</p>
 <p><strong>Tipo de Documento:</strong> {{ pasajero.document_type }}</p>
@@ -35,3 +39,4 @@ def create_seats_for_airplane(sender, instance, created, **kwargs):
                     break
             Seating.objects.bulk_create(seats)
         transaction.on_commit(create_seats)
+{% endblock %}

@@ -1,3 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_authenticated and user.role_id.description == 'Admin' %}
 <h1>Confirmar Eliminación</h1>
 <p>
   ¿Estás seguro de que quieres eliminar al pasajero
@@ -8,3 +12,8 @@
   <button type="submit">Sí, Eliminar</button>
   <a href="{% url 'passengerDetail' pasajero.pk %}">Cancelar</a>
 </form>
+{% else %}
+Solo los Administradores pueden eliminar Pasajeros.
+<p>Por favor, <a href="{% url 'login' %}">inicia sesión</a> para eliminar un pasajero.</p>
+{% endif %}
+{% endblock %}

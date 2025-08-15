@@ -29,7 +29,7 @@ class PassengerCreateView(CreateView):
 class PassengerUpdateView(UpdateView):
     model = Passenger
     form_class = PassengerForm
-    template_name = 'passengers/Create.html'
+    template_name = 'passengers/Update.html'
     context_object_name = 'pasajero'
 
     def get_success_url(self):

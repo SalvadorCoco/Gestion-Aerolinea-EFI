@@ -39,9 +39,9 @@
         </tbody>
     </table>
     {% if user.is_superuser %}
-        <a href="{% url 'passengerCreate' %}" class="btn btn-info">Crear Avion</a>
+        <a href="{% url 'passengerCreate' %}" class="btn btn-info">Crear Pasajero</a>
     {% else %}
-        <p><a href="{ url 'login' }" class="fa fa-eye">Iniciar Sesion</a>para la creacion de aviones</p>
+        <p><a href="{ url 'login' }" class="fa fa-eye">Iniciar Sesion</a>para la creacion de Pasajeros</p>
     {% endif %}
 </div>
 {% endblock %}

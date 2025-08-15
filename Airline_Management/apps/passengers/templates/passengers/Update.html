@@ -3,7 +3,7 @@
 
 {% block content %}
 {% if user.is_authenticated and user.role_id.description == 'Admin' %}
-<h2>Agregar Pasajero</h2>
+<h2>Editar Pasajero</h2>
 
 <div class="container">
     <form method="post" enctype="multipart/form-data">
@@ -16,8 +16,8 @@
     </form>
 </div>
 {% else %}
-Solo los Administradores pueden crear Pasajeros.
-<p>Por favor, <a href="{% url 'login' %}">inicia sesión</a> para crear un pasajero.</p>
+Solo los Administradores pueden editar Pasajeros.
+<p>Por favor, <a href="{% url 'login' %}">inicia sesión</a> para editar un pasajero.</p>
 {% endif %}
 {% endblock %}
 
