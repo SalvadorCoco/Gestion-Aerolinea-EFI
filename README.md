@@ -35,6 +35,7 @@ pip install -r requirements.txt
 
 4️⃣ **Correr las migraciones**
 ```bash
+cd Airline_Management
 python manage.py migrate
 ```
 
