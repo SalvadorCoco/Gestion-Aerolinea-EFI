@@ -27,6 +27,8 @@ urlpatterns = [
     path('', include('apps.accounts.urls')),
     path('flights/', include('apps.flights.urls')),
     path('reservations/', include('apps.reservations.urls')), 
+    path('api-auth/', include('rest_framework.urls') ),
+    path('api/', include('apps.api.urls')),
 ]
 
 if settings.DEBUG:
