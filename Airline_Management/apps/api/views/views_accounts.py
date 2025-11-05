@@ -1,4 +1,4 @@
-from ..accounts.models import Account
+from apps.accounts.models import Account
 
 from rest_framework.generics import (
     ListCreateAPIView,
@@ -9,15 +9,15 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from rest_framework import status 
-from .serializers import AccountSerializer
+from ..serializers.serializers_accounts import AccountSerializer
 
 class AccountListCreateView(ListCreateAPIView):
-    permission_classes = [IsAuthenticated]
+    """ permission_classes = [IsAuthenticated] """
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
 
 class AccountRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
-    permission_classes = [IsAuthenticated]
+    """ permission_classes = [IsAuthenticated] """
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
 
