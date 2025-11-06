@@ -56,7 +56,8 @@ INSTALLED_APPS = [
 
     # API
     'rest_framework',
-
+    'django_filters',
+    'drf_spectacular',
 ]
 
 """ CLOUDINARY_STORAGE = {
@@ -161,8 +162,17 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [ 
         'rest_framework.permissions.AllowAny',
     ],
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     #'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     #'PAGE_SIZE': 10,
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Airline Management API',
+    'DESCRIPTION': 'API for managing flights, reservations, passengers and airplanes',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
 }
 
 
