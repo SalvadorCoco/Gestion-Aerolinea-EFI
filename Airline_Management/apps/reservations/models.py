@@ -1,6 +1,7 @@
 from django.db import models
 import random
 import string
+import uuid
 
 from apps.airplanes.models import Seating
 from apps.flights.models import Flight
@@ -54,13 +55,9 @@ class Reservation(models.Model):
 
 
 class Ticket(models.Model):
-    reservation_id = models.OneToOneField(
-        Reservation,
-        on_delete=models.CASCADE
-    )
-    barcode = models.CharField(max_length=50)
-    issue_date = models.DateTimeField(auto_now_add=True)
-    state = models.CharField(max_length=20, default='Emitido')
+    code = models.CharField(max_length=64, unique=True, default=lambda: uuid.uuid4().hex)
+    reservation = models.OneToOneField('Reservation', on_delete=models.CASCADE, related_name='ticket')
+    issued_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'Ticket - {self.reservation_id.reservation_code}'
+        return f"Ticket {self.code} for reservation {self.reservation_id}"
